@@ -12,7 +12,7 @@ app.get("/apps", (req, res) => {
   const { sort = "", genres = "" } = req.query;
 
   if (sort) {
-    if (!["rating", "app"].includes(sort)) {
+    if (!["Rating", "App"].includes(sort)) {
       return res.status(400).send("Sort must be one of title or rank");
     }
   }
@@ -36,7 +36,7 @@ app.get("/apps", (req, res) => {
 
 
   if (sort) {
-    let keysort = (sort === "rating" ? "Rating": "App" )
+    let keysort = req.query.sort
     results.sort((a, b) => {
       return a[keysort] > b[keysort] ? 1 : a[keysort] < b[keysort] ? -1 : 0;
     });
@@ -45,6 +45,4 @@ app.get("/apps", (req, res) => {
   res.json(results);
 });
 
-app.listen(8000, () => {
-  console.log("Server started on PORT 8000");
-});
+module.exports = app;
